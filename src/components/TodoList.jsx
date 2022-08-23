@@ -4,6 +4,7 @@ import TodoForm from "./TodoForm";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
+  const [filterType, setFilterType] = useState("all");
 
   const addTodo = (todo) => {
     if (!todo.text) {
@@ -37,9 +38,9 @@ export default function TodoList() {
     setTodos(incompleteTodos);
   };
 
-  let incompleteTodos = todos.filter((todo) => !todo.isComplete).length;
-  let completedTodos = todos.filter((todo) => todo.isComplete).length;
-  const todoLabel = incompleteTodos && (incompleteTodos === 1 ? "todo" : "todos");
+  let incompleteTodos = todos.filter((todo) => !todo.isComplete);
+  let completedTodos = todos.filter((todo) => todo.isComplete);
+  const todoLabel = incompleteTodos.length && (incompleteTodos.length === 1 ? "todo" : "todos");
 
   return (
     <div className="flex items-center flex-col pt-10">
@@ -47,19 +48,53 @@ export default function TodoList() {
       <div className="bg-white w-[50%] rounded-2xl mt-10 shadow-md">
         {todos.length ? (
           <div>
-            {todos.map((todo, index) => (
-              <Todo todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
-            ))}
+            {todos.map((todo, index) => {
+              if (filterType !== "all") {
+                if (filterType === "completed") {
+                  return todo.isComplete && <Todo todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />;
+                }
+                if (filterType === "incompleted") {
+                  return !todo.isComplete && <Todo todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />;
+                }
+              } else {
+                return <Todo todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />;
+              }
+            })}
             <hr className="ml-6 mr-6" />
             <div className="p-6 flex justify-between">
-              <div className="text-gray-400">{incompleteTodos ? `${incompleteTodos} ${todoLabel} left.` : "All todos completed !"}</div>
-              {completedTodos ? (
-                <button className="text-gray-400 hover:text-gray-800 transition duration-300" onClick={() => removeCompletedTodos()}>
-                  Clear completed.
+              <div className="text-gray-400">{incompleteTodos.length ? `${incompleteTodos.length} ${todoLabel} left.` : "All todos completed !"}</div>
+              <div className="flex gap-4">
+                <button
+                  className={`text-gray-400 hover:text-gray-800 ${filterType === "all" ? "text-gray-800" : ""}`}
+                  onClick={() => {
+                    setFilterType("all");
+                  }}
+                >
+                  All
                 </button>
-              ) : (
-                ""
-              )}
+                <button
+                  className={`text-gray-400 hover:text-gray-800 ${filterType === "incompleted" ? "text-gray-800" : ""}`}
+                  onClick={() => {
+                    setFilterType("incompleted");
+                  }}
+                >
+                  Incompleted
+                </button>
+                <button
+                  className={`text-gray-400 hover:text-gray-800 ${filterType === "completed" ? "text-gray-800" : ""}`}
+                  onClick={() => {
+                    setFilterType("completed");
+                  }}
+                >
+                  Completed
+                </button>
+              </div>
+              <button
+                className={`text-gray-400 hover:text-gray-800 transition duration-300 ${completedTodos.length < 1 ? "invisible" : ""}`}
+                onClick={() => removeCompletedTodos()}
+              >
+                Clear completed.
+              </button>
             </div>
           </div>
         ) : (
