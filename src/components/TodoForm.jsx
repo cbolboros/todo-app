@@ -26,7 +26,6 @@ export default function TodoForm(props) {
   };
 
   const onInputChange = (e) => {
-    e.preventDefault();
     setInput(e.target.value);
   };
 

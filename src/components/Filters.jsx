@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function Filters({ todos, setFilteredTodos, activeFilter, setActiveFilter }) {
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function Filters({ todos, setFilteredTodos, activeFilter, setActi
     }
   }, [activeFilter]);
   return (
-    <div className="flex gap-4">
+    <motion.div layout className="flex gap-4">
       <button
         className={`text-gray-400 hover:text-gray-800 transition duration-300 ${activeFilter === 0 ? "text-gray-800" : ""}`}
         onClick={() => {
@@ -38,6 +39,6 @@ export default function Filters({ todos, setFilteredTodos, activeFilter, setActi
       >
         Complete
       </button>
-    </div>
+    </motion.div>
   );
 }

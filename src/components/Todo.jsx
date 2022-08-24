@@ -1,17 +1,18 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
+import { motion } from "framer-motion";
 
 export default function Todo({ todo, completeTodo, removeTodo }) {
   const checked = todo.isComplete;
   return (
-    <div className="first:p-6 pl-6 pb-6 pr-6">
+    <motion.div layout animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} className="first:p-6 pl-6 pb-6 pr-6">
       <div className={todo.isComplete ? "todo-row line-through" : "todo-row"}>
-        <div key={todo.id} className="flex items-center ">
+        <motion.div layout className="flex items-center ">
           <div className="flex-1">
             <input
               id={todo.id}
               type="checkbox"
-              checked={checked}
+              defaultChecked={checked}
               onClick={() => completeTodo(todo.id)}
               className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
@@ -22,8 +23,8 @@ export default function Todo({ todo, completeTodo, removeTodo }) {
           <button onClick={() => removeTodo(todo.id)}>
             <MdDelete className="w-6 h-6" />
           </button>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Filters from "./Filters";
 import Todo from "./Todo";
 import TodoForm from "./TodoForm";
+import { motion } from "framer-motion";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
@@ -35,16 +36,19 @@ export default function TodoList() {
       return todo;
     });
     setTodos(updatedTodos);
+    setFilteredTodos(updatedTodos);
   };
 
   const removeTodo = (id) => {
     const removeArr = [...todos].filter((todo) => todo.id !== id);
     setTodos(removeArr);
+    setFilteredTodos(removeArr);
   };
 
   const removeCompletedTodos = () => {
     const incompleteTodos = [...todos].filter((todo) => !todo.isComplete);
     setTodos(incompleteTodos);
+    setFilteredTodos(incompleteTodos);
   };
 
   const incompleteTodos = todos.filter((todo) => !todo.isComplete);
@@ -55,14 +59,14 @@ export default function TodoList() {
   return (
     <div className="flex items-center flex-col pt-10">
       <TodoForm onSubmit={addTodo} />
-      <div className="bg-white w-[50%] rounded-2xl mt-10 shadow-md">
+      <motion.div layout animate={{ borderRadius: "16px" }} className="bg-white w-[50%] rounded-2xl mt-10 shadow-md">
         {todos.length ? (
-          <div>
+          <motion.div layout animate={{ height: "100%" }}>
             {filteredTodos.map((todo, index) => (
-              <Todo todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
+              <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
             ))}
-            <hr className="ml-6 mr-6" />
-            <div className="p-6 flex justify-between">
+            <motion.hr layout className="ml-6 mr-6" />
+            <motion.div layout className="p-6 flex justify-between">
               <div className="text-gray-400">{incompleteTodos.length ? `${incompleteTodos.length} ${todoLabel} left.` : "All todos completed !"}</div>
               <Filters todos={todos} setFilteredTodos={setFilteredTodos} setActiveFilter={setActiveFilter} activeFilter={activeFilter} />
               <button
@@ -71,12 +75,12 @@ export default function TodoList() {
               >
                 Clear completed.
               </button>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         ) : (
           <div className="p-6 flex justify-center text-gray-400">No todos created.</div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }
