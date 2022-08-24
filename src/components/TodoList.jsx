@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Filters from "./Filters";
 import Todo from "./Todo";
 import TodoForm from "./TodoForm";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
@@ -61,7 +61,7 @@ export default function TodoList() {
       <TodoForm onSubmit={addTodo} />
       <motion.div layout animate={{ borderRadius: "16px" }} className="bg-white w-[50%] rounded-2xl mt-10 shadow-md">
         {todos.length ? (
-          <motion.div layout animate={{ height: "100%" }}>
+          <motion.div layout>
             {filteredTodos.map((todo, index) => (
               <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
             ))}
@@ -78,7 +78,11 @@ export default function TodoList() {
             </motion.div>
           </motion.div>
         ) : (
-          <div className="p-6 flex justify-center text-gray-400">No todos created.</div>
+          <AnimatePresence>
+            <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} layout className="p-6 flex justify-center text-gray-400">
+              No todos created.
+            </motion.div>
+          </AnimatePresence>
         )}
       </motion.div>
     </div>
