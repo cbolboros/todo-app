@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MdDelete } from "react-icons/md";
 
 export default function Todo({ todo, completeTodo, removeTodo }) {
