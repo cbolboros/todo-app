@@ -12,9 +12,9 @@ export default function Filters({ todos, setFilteredTodos, activeFilter, setActi
     if (activeFilter === 2) {
       setFilteredTodos(todos.filter((todo) => todo.isComplete));
     }
-  }, [activeFilter]);
+  }, [activeFilter, todos, setFilteredTodos]);
   return (
-    <motion.div layout className="flex gap-4">
+    <div className="flex gap-4">
       <button
         className={`text-gray-400 hover:text-gray-800 transition duration-300 ${activeFilter === 0 ? "text-gray-800" : ""}`}
         onClick={() => {
@@ -39,6 +39,6 @@ export default function Filters({ todos, setFilteredTodos, activeFilter, setActi
       >
         Complete
       </button>
-    </motion.div>
+    </div>
   );
 }

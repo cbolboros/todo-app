@@ -60,14 +60,13 @@ export default function TodoList() {
   return (
     <div className="flex items-center flex-col pt-10">
       <TodoForm onSubmit={addTodo} />
-      <motion.div layout animate={{ borderRadius: "16px" }} className="bg-white w-[50%] rounded-2xl mt-10 shadow-md overflow-hidden">
+      <div className="bg-white w-[50%] rounded-2xl mt-10 shadow-md overflow-hidden">
         {todos.length ? (
-          <motion.div layout>
+          <AnimatePresence>
             {filteredTodos.map((todo, index) => (
               <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
             ))}
-            <motion.hr layout className="ml-6 mr-6" />
-            <motion.div layout animate={{ opacity: 1 }} className="p-6 flex justify-between">
+            <div className="p-6 flex justify-between">
               <div className="text-gray-400">{incompleteTodos.length ? `${incompleteTodos.length} ${todoLabel} left.` : "All todos completed !"}</div>
               <Filters todos={todos} setFilteredTodos={setFilteredTodos} setActiveFilter={setActiveFilter} activeFilter={activeFilter} />
               <button
@@ -76,8 +75,8 @@ export default function TodoList() {
               >
                 Clear completed.
               </button>
-            </motion.div>
-          </motion.div>
+            </div>
+          </AnimatePresence>
         ) : (
           <AnimatePresence>
             <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} layout className="p-6 flex justify-center text-gray-400">
@@ -85,7 +84,7 @@ export default function TodoList() {
             </motion.div>
           </AnimatePresence>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }
