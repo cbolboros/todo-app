@@ -22,6 +22,7 @@ export default function TodoList() {
 
     const newTodos = [todo, ...todos];
 
+    setActiveFilter(0);
     setTodos(newTodos);
     setFilteredTodos(newTodos);
 
@@ -59,14 +60,14 @@ export default function TodoList() {
   return (
     <div className="flex items-center flex-col pt-10">
       <TodoForm onSubmit={addTodo} />
-      <motion.div layout animate={{ borderRadius: "16px" }} className="bg-white w-[50%] rounded-2xl mt-10 shadow-md">
+      <motion.div layout animate={{ borderRadius: "16px" }} className="bg-white w-[50%] rounded-2xl mt-10 shadow-md overflow-hidden">
         {todos.length ? (
           <motion.div layout>
             {filteredTodos.map((todo, index) => (
               <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
             ))}
             <motion.hr layout className="ml-6 mr-6" />
-            <motion.div layout className="p-6 flex justify-between">
+            <motion.div layout animate={{ opacity: 1 }} className="p-6 flex justify-between">
               <div className="text-gray-400">{incompleteTodos.length ? `${incompleteTodos.length} ${todoLabel} left.` : "All todos completed !"}</div>
               <Filters todos={todos} setFilteredTodos={setFilteredTodos} setActiveFilter={setActiveFilter} activeFilter={activeFilter} />
               <button
