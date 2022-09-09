@@ -60,13 +60,13 @@ export default function TodoList() {
   return (
     <div className="flex items-center flex-col pt-10">
       <TodoForm onSubmit={addTodo} />
-      <div className="bg-white w-[50%] rounded-2xl mt-10 shadow-md overflow-hidden">
+      <div className="bg-white w-[50%] rounded-2xl mt-10 shadow-md overflow-hidden p-6">
         {todos.length ? (
           <AnimatePresence>
             {filteredTodos.map((todo, index) => (
               <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
             ))}
-            <div className="p-6 flex justify-between">
+            <div className={`${filteredTodos.length ? "mt-6" : ""} flex justify-between`}>
               <div className="text-gray-400">{incompleteTodos.length ? `${incompleteTodos.length} ${todoLabel} left.` : "All todos completed !"}</div>
               <Filters todos={todos} setFilteredTodos={setFilteredTodos} setActiveFilter={setActiveFilter} activeFilter={activeFilter} />
               <button
