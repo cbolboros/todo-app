@@ -15,7 +15,7 @@ export default function Filters({ todos, setFilteredTodos, activeFilter, setActi
   return (
     <div className="flex gap-4">
       <button
-        className={`text-gray-400 hover:text-gray-800 transition duration-300 ${activeFilter === 0 ? "text-gray-800" : ""}`}
+        className={`text-gray-400 hover:text-blue-400 transition duration-300 ${activeFilter === 0 ? "text-blue-500 font-bold" : ""}`}
         onClick={() => {
           setActiveFilter(0);
         }}
@@ -23,7 +23,7 @@ export default function Filters({ todos, setFilteredTodos, activeFilter, setActi
         All
       </button>
       <button
-        className={`text-gray-400 hover:text-gray-800 transition duration-300 ${activeFilter === 1 ? "text-gray-800" : ""}`}
+        className={`text-gray-400 hover:text-blue-400 transition duration-300 ${activeFilter === 1 ? "text-blue-500 font-bold" : ""}`}
         onClick={() => {
           setActiveFilter(1);
         }}
@@ -31,7 +31,7 @@ export default function Filters({ todos, setFilteredTodos, activeFilter, setActi
         Incomplete
       </button>
       <button
-        className={`text-gray-400 hover:text-gray-800 transition duration-300 ${activeFilter === 2 ? "text-gray-800" : ""}`}
+        className={`text-gray-400 hover:text-blue-400 transition duration-300 ${activeFilter === 2 ? "text-blue-500 font-bold" : ""}`}
         onClick={() => {
           setActiveFilter(2);
         }}

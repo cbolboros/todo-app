@@ -79,7 +79,7 @@ export default function TodoList() {
           </AnimatePresence>
         ) : (
           <AnimatePresence>
-            <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} layout className="p-6 flex justify-center text-gray-400">
+            <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} layout className="flex justify-center text-gray-400">
               No todos created.
             </motion.div>
           </AnimatePresence>
