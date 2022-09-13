@@ -21,11 +21,13 @@ export default function Todo({ todo, completeTodo, removeTodo }) {
               type="checkbox"
               defaultChecked={checked}
               onClick={() => completeTodo(todo.id)}
-              className="todo-checkbox w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              className="todo-checkbox w-4 h-4 accent-gray-200 rounded border-gray-300 focus:ring-gray-300   dark:focus:ring-gray-300 dark:ring-offset-gray-800 focus:ring-1 dark:bg-gray-400 dark:border-gray-400"
             />
             <label
               htmlFor={todo.id}
-              className={`${todo.isComplete ? "line-through" : ""} ml-4 text-xl font-medium text-gray-900 dark:text-gray-300 select-none leading-normal`}
+              className={`${
+                todo.isComplete ? "line-through dark:text-gray-200" : ""
+              } ml-4 text-xl font-medium text-gray-900 dark:text-black select-none leading-normal`}
             >
               {todo.text}
             </label>
