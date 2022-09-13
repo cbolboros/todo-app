@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Filters from "./Filters";
 import Todo from "./Todo";
 import TodoForm from "./TodoForm";
@@ -8,6 +8,9 @@ export default function TodoList() {
   const [todos, setTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [activeFilter, setActiveFilter] = useState(0);
+  const [scrollable, setScrollable] = useState(false);
+
+  const scrollableDiv = useRef(null);
 
   useEffect(() => {
     if (!todos.length) {
@@ -25,8 +28,9 @@ export default function TodoList() {
     setActiveFilter(0);
     setTodos(newTodos);
     setFilteredTodos(newTodos);
-
-    console.log(newTodos);
+    if (scrollableDiv.current) {
+      scrollableDiv.current.scrollTop = 0;
+    }
   };
 
   const completeTodo = (id) => {
@@ -52,6 +56,18 @@ export default function TodoList() {
     setFilteredTodos(incompleteTodos);
   };
 
+  const onAnimationComplete = () => {
+    if (scrollableDiv.current) {
+      setScrollable(scrollableDiv.current.scrollHeight > scrollableDiv.current.clientHeight);
+    }
+  };
+
+  const onScroll = (e) => {
+    if (e.target.scrollTop === e.target.scrollTopMax) {
+      setScrollable(false);
+    } else if (scrollableDiv.current.scrollHeight > scrollableDiv.current.clientHeight) setScrollable(true);
+  };
+
   const incompleteTodos = todos.filter((todo) => !todo.isComplete);
   const completedTodos = todos.filter((todo) => todo.isComplete);
 
@@ -63,14 +79,21 @@ export default function TodoList() {
       <div className="bg-white w-[50%] rounded-2xl mt-10 shadow-md overflow-hidden p-6">
         {todos.length ? (
           <>
-            <div className="overflow-auto max-h-[60vh] scroll-container scroll-smooth">
+            <div
+              className="overflow-auto max-h-[60vh] scroll-container scroll-smooth"
+              ref={scrollableDiv}
+              onScroll={onScroll}
+              style={{
+                boxShadow: scrollable ? "inset 0 -20px 20px -24px rgb(0 0 0 / 0.16)" : "none",
+              }}
+            >
               <AnimatePresence>
                 {filteredTodos.map((todo, index) => (
-                  <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
+                  <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} onAnimationComplete={onAnimationComplete} />
                 ))}
               </AnimatePresence>
             </div>
-            <div className={`${filteredTodos.length ? "mt-6" : ""} flex justify-between`}>
+            <div className={`${filteredTodos.length ? "pt-6" : ""} flex justify-between`}>
               <div className="text-gray-400">{incompleteTodos.length ? `${incompleteTodos.length} ${todoLabel} left.` : "All todos completed !"}</div>
               <Filters todos={todos} setFilteredTodos={setFilteredTodos} setActiveFilter={setActiveFilter} activeFilter={activeFilter} />
               <button

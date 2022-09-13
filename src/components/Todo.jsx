@@ -1,10 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export default function Todo({ todo, completeTodo, removeTodo }) {
+export default function Todo({ todo, completeTodo, removeTodo, onAnimationComplete }) {
   const checked = todo.isComplete;
+
   return (
     <motion.div
+      onAnimationComplete={onAnimationComplete}
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: "auto" }}
       exit={{ opacity: 0, height: 0 }}
