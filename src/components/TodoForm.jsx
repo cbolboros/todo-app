@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { HiOutlinePaperAirplane, HiPaperAirplane } from "react-icons/hi";
+import { v4 as uuidv4 } from "uuid";
 
 export default function TodoForm(props) {
   const [input, setInput] = useState("");
@@ -9,7 +10,7 @@ export default function TodoForm(props) {
     e.preventDefault();
 
     props.onSubmit({
-      id: Math.floor(Math.random() * 5000),
+      id: uuidv4(),
       text: input,
       isComplete: false,
     });
