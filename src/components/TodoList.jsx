@@ -62,11 +62,13 @@ export default function TodoList() {
       <TodoForm onSubmit={addTodo} />
       <div className="bg-white w-[50%] rounded-2xl mt-10 shadow-md overflow-hidden p-6">
         {todos.length ? (
-          <AnimatePresence>
-            <div className="overflow-auto max-h-[60vh]">
-              {filteredTodos.map((todo, index) => (
-                <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
-              ))}
+          <>
+            <div className="overflow-auto max-h-[60vh] scroll-container scroll-smooth">
+              <AnimatePresence>
+                {filteredTodos.map((todo, index) => (
+                  <Todo key={todo.id} todo={todo} completeTodo={completeTodo} removeTodo={removeTodo} />
+                ))}
+              </AnimatePresence>
             </div>
             <div className={`${filteredTodos.length ? "mt-6" : ""} flex justify-between`}>
               <div className="text-gray-400">{incompleteTodos.length ? `${incompleteTodos.length} ${todoLabel} left.` : "All todos completed !"}</div>
@@ -78,7 +80,7 @@ export default function TodoList() {
                 Clear completed.
               </button>
             </div>
-          </AnimatePresence>
+          </>
         ) : (
           <AnimatePresence>
             <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} layout className="flex justify-center text-gray-400">
