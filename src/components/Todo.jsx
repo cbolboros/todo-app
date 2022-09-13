@@ -26,8 +26,8 @@ export default function Todo({ todo, completeTodo, removeTodo }) {
             <label
               htmlFor={todo.id}
               className={`${
-                todo.isComplete ? "line-through dark:text-gray-200" : ""
-              } ml-4 text-xl font-medium text-gray-900 dark:text-black select-none leading-normal`}
+                todo.isComplete ? "line-through dark:text-gray-200 text-gray-200" : "text-black"
+              } ml-4 text-xl font-medium select-none leading-normal`}
             >
               {todo.text}
             </label>
